@@ -1,26 +1,53 @@
 let currentPokemonIndex = 0;
 let allPokemon = [];
+let loadingMore = false;
 
 async function init() {
   await loadAllPokemon();
   renderPokemon();
 }
 
+
 async function loadAllPokemon() {
-  const numberOfPokemon = 101;
+  const initialPokemonCount = 50;
+  const pokemonContainer = document.getElementById('pokedex');
 
-  for (let i = 1; i <= numberOfPokemon; i++) {
-    let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-    let response = await fetch(url);
-    let pokemon = await response.json();
+  async function loadMorePokemon() {
+    loadingMore = true;
 
-    allPokemon.push(pokemon);
+    const start = allPokemon.length + 1;
+    const end = start + initialPokemonCount;
+
+    for (let i = start; i < end; i++) {
+      let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+      let response = await fetch(url);
+
+      if (!response.ok) {
+        console.error(`Failed to fetch Pokemon ${i}`);
+        continue;
+      }
+
+      let pokemon = await response.json();
+      allPokemon.push(pokemon);
+    }
+
+    renderPokemon();
+    loadingMore = false;
   }
 
-  console.log("loaded all Pokemon", allPokemon);
+  await loadMorePokemon();
+
+  window.addEventListener('scroll', () => {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    
+    if (scrollTop + clientHeight >= scrollHeight - 10 && !loadingMore) {
+      loadMorePokemon();
+    }
+  });
 }
 
-function renderPokemon() {
+
+async function renderPokemon() {
   let pokedexContainer = document.getElementById("pokedex");
   pokedexContainer.innerHTML = "";
 
@@ -29,8 +56,8 @@ function renderPokemon() {
 
     let pokemonElement = document.createElement("div");
     pokemonElement.innerHTML = `
-    <div class="pokemon-header" id="pokemon-header-id">
-      <h2>${capitalizeFirstLetter(pokemonCard["name"])}</h2>
+    <div class="pokemon-header" id="pokemon-header-${i}">
+      <h2 id="pokmonName">${capitalizeFirstLetter(pokemonCard["name"])}</h2>
       <span>${formatId(pokemonCard["id"])}</span>
       <div class="front-sight-pokemon">
           <div>${getTypes(pokemonCard)}</div>
@@ -46,8 +73,12 @@ function renderPokemon() {
     });
 
     pokedexContainer.appendChild(pokemonElement);
+
+    // Farbe für jedes gerenderte Pokémon setzen
+    setPokemonHeaderColor(pokemonCard, i);
   }
 }
+
 
 function showPokemon(index) {
   let mainPokeStats = document.getElementById("pokemon-stats");
@@ -57,7 +88,7 @@ function showPokemon(index) {
     const pokemon = allPokemon[index];
     mainPokeStats.innerHTML += `
       <div class="PokeCard" id="PokeCard">
-        <div class="Pokemon-single-card">
+        <div class="Pokemon-single-card" id="Pokemon-single-card">
             <div class="pokestats-order">
                 <h1>${capitalizeFirstLetter(pokemon["name"])}</h1>
                 <span>${formatId(pokemon["id"])}</span>
@@ -96,7 +127,8 @@ function showPokemon(index) {
   renderAbout(allPokemon[index]);
   renderBaseStats(allPokemon[index]);
   renderMoves(allPokemon[index]);
-  getTypesColor(allPokemon[index]);
+  setPokemonCardColor(allPokemon[index]);
+
 }
 function renderAbout(pokemon) {
   let abouts = document.getElementById("allAbout");
@@ -146,7 +178,7 @@ function renderMoves(pokemon) {
 
     movesContainer.innerHTML += `
       <div>
-          <span class="theMove">${move.move.name}</span>
+          <nav class="theMove">${move.move.name}</nav>
       </div>`;
   }
 }
@@ -201,14 +233,28 @@ function getAbilities(pokemon) {
   return result + '</span>';
 }
 
+function setPokemonHeaderColor(pokemon, index) {
+  let types = pokemon['types'][0]['type']['name'];
+  let colorInfo = typeColors.find(typeInfo => typeInfo.type === types);
+  let headerElement = document.getElementById(`pokemon-header-${index}`);
 
-function getTypesColor(pokemon) {
-  let types = pokemon['types']['0']['type']['name'];
+  if (headerElement && colorInfo) {
+    headerElement.className = 'pokemon-header';
+    headerElement.style.backgroundColor = colorInfo.color;
+  }
+}
 
-    if (types == "grass") {
-      document.getElementById('pokemon-header-id').classList.add('grass');
-    }
-  };
+function setPokemonCardColor(pokemon) {
+  let type = pokemon['types'][0]['type']['name'];
+
+  let color = typeColors.find((entry) => entry.type === type)?.color;
+
+  let pokemonCard = document.getElementById('Pokemon-single-card');
+  if (color && pokemonCard) {
+    pokemonCard.style.backgroundColor = color;
+  }
+}
+
 
 
 
@@ -229,3 +275,4 @@ function showMoves(){
   document.getElementById('allBaseStats').classList.add('d-none');
   document.getElementById('allMoves').classList.remove('d-none');
 }
+

@@ -9,12 +9,17 @@ header{
     display: flex;
     justify-content: space-around;
     align-items: center;
+    width: 100vw;
     height: 16vh;
-    background: linear-gradient(to right, yellow, blue);
+    background: linear-gradient(to right, red, yellow, blue);
     color: white;
 }
-header img{
-    height: 250px;
+
+.pokeball{
+    width: 100px;
+}
+.pokelogo{
+    width: 250px;
 }
 
 #pokedex{
@@ -48,15 +53,6 @@ header img{
     scale: 1.05;
     transition: 0.25s ease-in-out;
 }
-
-/* .pokemon-stats{
-    height: 50vh;
-    border-top-right-radius: 25px;
-    border-top-left-radius: 25px;
-    margin-top: -26px;
-    background-color: white;
-} */
-
 
 .pokemon-img-class{
     width: 100%;
@@ -140,7 +136,7 @@ header img{
 }
 #allMoves {
     overflow-y: auto; 
-    max-height: 300px;
+    max-height: 250px;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -179,7 +175,7 @@ header img{
     align-items: center;
 }
 .pokemon-img-class{
-    height: 20vh;
+    height: 35vh;
 }
 
 .inputField{
@@ -190,3 +186,17 @@ header img{
 .cursor{
     cursor: pointer;
 }
+
+.cardButton{
+    width: 50px;
+    height: 50px;
+}
+
+.searchBtn{
+    background: linear-gradient(to right, rgb(60,60,214), rgb(35,35,231));
+    color: rgb(255,250,0);
+    width: 90px;
+    cursor: pointer;
+}
+
+/* this area is for responsive */

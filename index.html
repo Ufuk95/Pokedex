@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="/pokeball.png" type="image/x-icon">
+    <link rel="shortcut icon" href="img/pokeball.png" type="image/png">
     <script src="script.js"></script>
     <script src="color.js"></script>
 
@@ -24,7 +24,11 @@
 
     <div class="main-page">
         <header>
-            <img src="/pokelogo.png">
+            <a href="index.html"><img src="img/pokeball.png" alt="pokeball" class="pokeball"></a>
+            <img src="img/pokelogo.png" alt="pokelogo" class="pokelogo">
+            <div>
+                <input id="input" type="text" placeholder="Pokemon suchen"><button class="searchBtn" onclick="searchPokemon()">suchen</button>
+            </div>
         </header>
 
         <div id="pokedex">

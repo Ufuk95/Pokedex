@@ -8,7 +8,7 @@ async function init() {
 }
 
 async function loadAllPokemon() {
-  const initialPokemonCount = 50;
+  const initialPokemonCount = 25;
   const pokemonContainer = document.getElementById("pokedex");
 
   async function loadMorePokemon() {
@@ -63,6 +63,7 @@ async function renderPokemon() {
     setPokemonHeaderColor(pokemonCard, i);
   }
 }
+
 function renderPokemonHTML(pokemonCard, i) {
   return `
   <div class="pokemon-header" id="pokemon-header-${i}">
@@ -76,7 +77,6 @@ function renderPokemonHTML(pokemonCard, i) {
     </div>
   </div>`;
 }
-
 
 function showPokemon(index) {
   let mainPokeStats = document.getElementById("pokemon-stats");
@@ -143,6 +143,7 @@ function renderAbout(pokemon) {
 
   abouts.innerHTML = renderAboutHTML(pokemon);
 }
+
 function renderAboutHTML(pokemon){
   return `
   <div class="designAbout">
@@ -162,7 +163,6 @@ function renderAboutHTML(pokemon){
       <div>${getAbilities(pokemon)}</div>
   </div>`
 }
-
 
 function renderBaseStats(pokemon) {
   let statsContainer = document.getElementById("allBaseStats");

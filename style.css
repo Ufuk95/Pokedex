@@ -30,7 +30,18 @@ span{
     width: 250px;
 }
 
-
+.type {
+    width: 70px;
+    height: 20px;
+    background-color: #f5deb330;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+}
 
 /* scrollbalken aus chatGPT */
 
@@ -166,6 +177,10 @@ span{
     display: none !important;
 }
 
+.pokeIMG {
+    width: 160px;
+}
+
 #allAbout{
     display: flex;
     flex-direction: column;
@@ -262,7 +277,7 @@ span{
 /* this area is for responsive */
 
 /* tablet */
-@media(max-width: 750px){
+@media(max-width: 845px){
     header{
         background: linear-gradient(to right, red, blue);
     }
@@ -275,9 +290,12 @@ span{
     .pokemon-header{
         width: 30vw;
     }
+    .pokeIMG {
+        width: 130px;
+    }
 }
 /* smartphones */
-@media (min-width: 450px) and (max-width:600px){
+@media (min-width: 450px) and (max-width:700px){
     #pokedex{
         display: flex;
         flex-direction: column;
@@ -374,5 +392,8 @@ span{
     #allMoves{
         padding: 0;
         max-height: 30vh;
+    }
+    .pokeIMG {
+        width: 100px;
     }
 }

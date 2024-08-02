@@ -29,6 +29,10 @@ span{
 .pokelogo{
     width: 250px;
 }
+.input {
+    height: 20px;
+    background-color: rgba(245, 222, 179, 0.394);
+}
 
 .type {
     width: 70px;
@@ -262,6 +266,14 @@ span{
     color: rgb(255,250,0);
     width: 90px;
     cursor: pointer;
+    height: 25px;
+    border-radius: 10px;
+}
+.searchBtn:hover {
+    background: linear-gradient(to right, rgba(181, 214, 60, 0.75), rgba(231, 35, 35, 0.759));
+    color: black;
+    height: 30px;
+    border: none
 }
 
 .infoButton{
